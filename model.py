@@ -18,8 +18,6 @@ def command_to_list(command_str):
     :return: A list of results for the command.  A list of unicode strings split up by the \\n character
     """
 
-
-
     try:
         command = command_str.split()
         raw_results = check_output(command)
@@ -106,6 +104,7 @@ def main():
     lines = get_package_info("blender")
     for line in lines:
         print(line)
+
 
 if __name__ == '__main__':
     main()
