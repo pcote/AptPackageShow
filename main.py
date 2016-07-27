@@ -79,8 +79,22 @@ def get_stats():
 
 def get_package_info(pkg_name):
     cmd_str = "apt-cache show {}".format(pkg_name)
-    results = command_to_list(cmd_str)
-    return results
+    lines = command_to_list(cmd_str)
+    match_patt = r"^\w.+?:.+$"
+    search_patt = r"\w.+?:"
+
+    proper_lines = [line for line in lines if re.match(match_patt, line)]
+
+    pair_list = []
+    for line in proper_lines:
+        key_search_result = re.search(search_patt, line)
+        key_name = key_search_result.group().rstrip(": ")
+        value_split_result = re.split(search_patt, line, maxsplit=1)
+        value = value_split_result[1]
+        pair = (key_name, value)
+        pair_list.append(pair)
+
+    return pair_list
 
 
 def print_list(the_list):
@@ -89,9 +103,9 @@ def print_list(the_list):
 
 
 def main():
-    stats = get_stats()
-    print_list(stats)
-
+    lines = get_package_info("blender")
+    for line in lines:
+        print(line)
 
 if __name__ == '__main__':
     main()
