@@ -1,7 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
 import model
 
 app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return redirect("/static/index.html")
+
 
 @app.route("/search/<search_term>")
 def search(search_term):
@@ -13,6 +18,7 @@ def search(search_term):
 def get_stats():
     stats = model.get_stats()
     return jsonify(dict(stats=stats))
+
 
 @app.route("/packageinfo/<package_name>")
 def get_package_info(package_name):
