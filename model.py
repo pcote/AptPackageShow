@@ -36,8 +36,13 @@ def command_to_list(command_str):
 def search(search_term):
     command = "apt-cache search {}".format(search_term)
     result_list = command_to_list(command)
-    tupled_result_list = [tuple(result.split(" - ")) for result in result_list if result]
-    return tupled_result_list
+    # TODO: This is downright ugly and does too much.  Needs splitting up
+    tupled_result_list = [tuple(result.split(" - ")[:2])
+                            for result in result_list
+                                if result]
+
+    dict_list = [dict(package=pkg, description=desc) for pkg, desc in tupled_result_list]
+    return dict_list
 
 
 def get_package_names():
@@ -71,8 +76,9 @@ def get_stats():
                         if item]
 
     pairs = zip(get_keys(), values)
+    dict_list = [dict(name=k, val=v) for k, v in pairs]
 
-    return list(pairs)
+    return dict_list
 
 
 def get_package_info(pkg_name):
@@ -92,7 +98,8 @@ def get_package_info(pkg_name):
         pair = (key_name, value)
         pair_list.append(pair)
 
-    return pair_list
+    dict_list = [dict(name=name, val=val) for name, val in pair_list]
+    return dict_list
 
 
 def print_list(the_list):
