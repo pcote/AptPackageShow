@@ -23,3 +23,8 @@ var repoStatsController = function(repoStatsService){
     var promise = repoStatsService.getStats();
     promise.then(successCallback);
 };
+
+angular.module("repoStats", [])
+        .service("repoStatsService", RepoStatsService)
+        .controller("repoStatsController", repoStatsController)
+        .directive("apsRepoStats", apsRepoStats);

@@ -11,3 +11,7 @@ var mainController = function(){
     var mc = this;
     mc.stubVar = "This is a stub from the controller";
 };
+
+angular.module("mainApp", [])
+    .controller("mainController", mainController)
+    .directive("apsMainApp", apsMainApp);
