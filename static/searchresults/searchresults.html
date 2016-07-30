@@ -1,10 +1,10 @@
 <table class="table">
     <tr>
         <th>Package Name</th>
-        <th>Package Desc</th>
+        <th>Package Description</th>
     </tr>
-    <tr>
-        <td>Rec1</td>
-        <td>Rec2</td>
+    <tr ng-repeat="rec in src.packageList">
+        <td>{{ rec.package }}</td>
+        <td>{{ rec.description }}</td>
     </tr>
 </table>
