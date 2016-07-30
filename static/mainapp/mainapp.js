@@ -13,6 +13,6 @@ var mainController = function(){
     mc.searchResults = [];
 };
 
-angular.module("mainApp", ["searchBox"])
+angular.module("mainApp", ["searchBox", "searchresults"])
     .controller("mainController", mainController)
     .directive("apsMainApp", apsMainApp);
