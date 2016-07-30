@@ -10,6 +10,7 @@ var apsMainApp = function(){
 var mainController = function(){
     var mc = this;
     mc.stubVar = "This is a stub from the controller";
+    mc.searchResults = [];
 };
 
 angular.module("mainApp", ["searchBox"])
