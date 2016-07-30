@@ -7,11 +7,19 @@ var apsRepoStats = function(){
     return d;
 };
 
-var repoStatsController = function(){
+
+var repoStatsController = function(repoStatsService){
     var rsc = this;
     rsc.stats = [
         {name: "package", val: "blender"},
         {name: "version", val: "2.3"},
         {name: "description", val: "does stuff"}
     ];
+
+    var successCallback = function(res){
+        rsc.stats = res.data.stats;
+    };
+
+    var promise = repoStatsService.getStats();
+    promise.then(successCallback);
 };
