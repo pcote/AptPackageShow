@@ -11,7 +11,18 @@ var apsSearchResults = function(){
     return d;
 };
 
-var searchResultsController = function($scope){
+
+var SearchResultsService = function($http){
+
+    this.getPackageDetail = function(packageName){
+        var someUrl = "/packageinfo/" + escape(packageName);
+        var promise = $http.get(someUrl);
+        return promise;
+    };
+};
+
+
+var searchResultsController = function($scope, searchResultsService){
     var src = this;
     src.packageList = [];
 
@@ -25,8 +36,22 @@ var searchResultsController = function($scope){
     };
 
     $scope.$watch(resVal, resListener);
+
+
+    src.packageClick = function(pkgName){
+
+        var successCallback = function(res){
+            var packageInfo = res.data.package_info;
+            console.log(packageInfo);
+        };
+
+        var promise = searchResultsService.getPackageDetail(pkgName);
+        promise.then(successCallback);
+    };
 };
 
+
 angular.module("searchresults", [])
+    .service("searchResultsService", SearchResultsService)
     .controller("searchResultsController", searchResultsController)
     .directive("apsSearchResults", apsSearchResults);
