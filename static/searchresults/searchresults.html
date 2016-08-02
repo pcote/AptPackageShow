@@ -1,15 +1,12 @@
-<table class="table">
-    <tr>
-        <th>&nbsp;</th>
-        <th>Package Name</th>
-        <th>Package Description</th>
-    </tr>
-    <tr ng-repeat="rec in src.packageList">
-        <td><input type="radio"
-                   ng-model="packageChoice"
-                   value="{{rec.package}}"
-                   ng-click="src.packageClick(rec.package)"/></td>
-        <td>{{ rec.package }}</td>
-        <td>{{ rec.description }}</td>
-    </tr>
-</table>
+<form>
+    <table class="table">
+        <tr>
+            <th>Package Name</th>
+            <th>Package Description</th>
+        </tr>
+        <tr ng-repeat="rec in src.packageList">
+            <td><a href="#">{{ rec.package }}</a></td>
+            <td>{{ rec.description }}</td>
+        </tr>
+    </table>
+</form>
