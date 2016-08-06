@@ -1,12 +1,20 @@
-<form>
-    <table class="table">
-        <tr>
-            <th>Package Name</th>
-            <th>Package Description</th>
-        </tr>
-        <tr ng-repeat="rec in src.packageList">
-            <td><a href="#" ng-click="src.packageClick(rec.package)">{{ rec.package }}</a></td>
-            <td>{{ rec.description }}</td>
-        </tr>
-    </table>
-</form>
+<div class="col-lg-6">
+    <form>
+        <table class="table">
+            <tr>
+                <th>Package Name</th>
+                <th>Package Description</th>
+            </tr>
+            <tr ng-repeat="rec in src.packageList">
+                <td><a href="#" ng-click="src.packageClick(rec.package)">{{ rec.package }}</a></td>
+                <td>{{ rec.description }}</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="col-lg-6">
+    <h1>Information section stub</h1>
+</div>
+
+
+
