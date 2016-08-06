@@ -25,6 +25,7 @@ var SearchResultsService = function($http){
 var searchResultsController = function($scope, searchResultsService){
     var src = this;
     src.packageList = [];
+    src.packageDetails = [];
 
     // Watch set up for changes in the package list that comes up.
     var resVal = function(){
@@ -33,6 +34,7 @@ var searchResultsController = function($scope, searchResultsService){
 
     var resListener = function(newVal, oldVal){
         src.packageList = $scope.results;
+        src.packageDetails = [];
     };
 
     $scope.$watch(resVal, resListener);
@@ -42,7 +44,7 @@ var searchResultsController = function($scope, searchResultsService){
 
         var successCallback = function(res){
             var packageInfo = res.data.package_info;
-            console.log(packageInfo);
+            src.packageDetails = packageInfo;
         };
 
         var promise = searchResultsService.getPackageDetail(pkgName);

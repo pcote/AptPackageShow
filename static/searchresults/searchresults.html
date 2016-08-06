@@ -13,7 +13,18 @@
     </form>
 </div>
 <div class="col-lg-6">
-    <h1>Information section stub</h1>
+    <table class="table">
+        <tr>
+            <th>Detail Name</th>
+            <th>Detail Info</th>
+        </tr>
+        <tr ng-repeat="detail in src.packageDetails">
+            <td>
+                {{ detail.name }}
+            </td>
+            <td>{{ detail.val }}</td>
+        </tr>
+    </table>
 </div>
 
 
