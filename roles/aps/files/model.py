@@ -19,8 +19,8 @@ def command_to_list(command_str):
     """
 
     try:
-        #command = command_str.split()
-        raw_results = check_output(command_str, shell=True)
+        command = command_str.split()
+        raw_results = check_output(command, shell=False)
         unicode_results = raw_results.decode()
         final_list = unicode_results.split("\n")
         if __empty_string(final_list[-1]):
