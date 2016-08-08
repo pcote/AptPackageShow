@@ -11,16 +11,15 @@ logger.addHandler(logging.StreamHandler(sys.stdout))
 def __empty_string(arg):
     return re.match(r"^\s*$", arg)
 
-def command_to_list(command_str):
+def command_to_list(cmd_list):
     """
     Takes a command that you could put in on the bash term and executes it.
-    :param command_str: The string representing the command to be run.
+    :param cmd_list: The list representing the command to be run.
     :return: A list of results for the command.  A list of unicode strings split up by the \\n character
     """
 
     try:
-        command = command_str.split()
-        raw_results = check_output(command, shell=False)
+        raw_results = check_output(cmd_list, shell=False)
         unicode_results = raw_results.decode()
         final_list = unicode_results.split("\n")
         if __empty_string(final_list[-1]):
@@ -29,14 +28,16 @@ def command_to_list(command_str):
         return final_list
     except CalledProcessError as cpe:
         msg = "command_to_list could not properly process the command: {}"
-        msg = msg.format(command_str)
+        msg = msg.format(cmd_list)
         logger.error(msg)
         raise Exception(msg)
 
 
 def search(search_term):
     command = "/usr/bin/apt-cache search {}".format(search_term)
-    result_list = command_to_list(command)
+    cmd_list = ["/usr/bin/apt-cache", "search",]
+    cmd_list.append(search_term)
+    result_list = command_to_list(cmd_list)
     # TODO: This is downright ugly and does too much.  Needs splitting up
     tupled_result_list = [tuple(result.split(" - ")[:2])
                             for result in result_list
@@ -47,8 +48,8 @@ def search(search_term):
 
 
 def get_package_names():
-    command_str = "/usr/bin/apt-cache pkgnames"
-    data_list = command_to_list(command_str)
+    command_lst = ["/usr/bin/apt-cache", "pkgnames"]
+    data_list = command_to_list(command_lst)
     return data_list
 
 
@@ -57,7 +58,7 @@ def get_stats():
     Get info about apt cache stats
     :return:
     """
-    command = "/usr/bin/apt-cache stats"
+    command = ["/usr/bin/apt-cache", "stats"]
     results = command_to_list(command)
 
     patt = r"Total.+?:"
@@ -83,7 +84,8 @@ def get_stats():
 
 
 def get_package_info(pkg_name):
-    cmd_str = "/usr/bin/apt-cache show {}".format(pkg_name)
+    cmd_str = ["/usr/bin/apt-cache", "show"]
+    cmd_str.append(pkg_name)
     lines = command_to_list(cmd_str)
     match_patt = r"^\w.+?:.+$"
     search_patt = r"\w.+?:"
